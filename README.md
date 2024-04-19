@@ -1,73 +1,198 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Usage of Husky with Prettier and Eslint
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This document describes how to use Husky with Prettier and Eslint.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Prettier
 
-## Description
+Prettier is an opinionated code formatter.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+https://prettier.io/
 
-## Installation
+#### Install prettier
 
 ```bash
-$ npm install
+$ npm install --save-dev --save-exact prettier
 ```
 
-## Running the app
+#### Options
+
+https://prettier.io/docs/en/options
+
+#### Example prettier script on package.json
+
+```json
+{
+  "scripts": {
+    "prettier:check": "prettier --check .",
+    "prettier:format": "prettier --write ."
+  }
+}
+```
+
+#### Example prettier config
+
+```json
+{
+  "prettier": {
+    "printWidth": 80,
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "all"
+  }
+}
+```
+
+#### Example prettier ignore file
+
+.prettierignore
+
+By default ignore node_modules
+
+```
+dist
+package-lock.json
+```
+
+### Eslint
+
+Eslint is a static code analysis tool for identifying problematic patterns found in JavaScript code.
+
+https://eslint.org/
+
+#### Install eslint
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ npm install --save-dev eslint
 ```
 
-## Test
+#### Initialize eslint config file
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ npx eslint --init
 ```
 
-## Support
+#### Rules:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+https://eslint.org/docs/latest/rules/
+https://typescript-eslint.io/rules/
+https://standardjs.com/rules
 
-## Stay in touch
+```bash
+$ npm install --save-dev eslint-plugin-prettier
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+More details:
+https://github.com/prettier/eslint-plugin-prettier
 
-## License
+Evitar que choquen las reglas de prettier con las de eslint
 
-Nest is [MIT licensed](LICENSE).
+```bash
+$ npm install --save-dev eslint-config-prettier
+```
+
+More details:
+https://github.com/prettier/eslint-config-prettier
+
+#### Example eslint script on package.json
+
+```json
+{
+  "scripts": {
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --quiet --fix"
+  }
+}
+```
+
+#### Example eslint config
+
+```json
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "rules": {
+    "eqeqeq": ["error", "always"],
+    "no-empty-function": "error",
+    "no-implicit-coercion": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/no-duplicate-enum-values": "error",
+    "@typescript-eslint/no-inferrable-types": "off"
+  }
+}
+```
+
+#### Example eslint ignore file
+
+.eslintignore
+
+```
+package.json
+package-lock.json
+dist
+```
+
+### Examples
+
+https://github.com/colbyfayock/my-husky-project/tree/main%2Btest
+https://github.com/pedrovelasquez9/react-typescript-eslint-prettier-husky-template
+
+### Husky
+
+https://git-scm.com/docs/githooks
+
+https://github.com/typicode/husky
+
+#### Installation
+
+The next installation was used in husky with package.json
+
+```bash
+$ npm install huskey --save-dev
+```
+
+```bash
+$ yarn add huskey -D
+```
+
+To create a .husky folder and add the pre-commit file
+
+```bash
+$ npx hunsky-init && npm install
+```
+
+#### Define a script in package.json. 
+
+1. Install Husky using the npm package manager.
+2. Create a .husky directory in the project root.
+
+```bash
+$ npm set-script prepare 'husky install'
+$ npm run prepare
+```
+
+3. Create a pre-commit hook in the .husky directory. This hook will run the npm run lint command before each commit.
+
+```bash
+$ npx husky add husky/pre-commit "npx lint-staged"
+$ npx husky add husky/pre-push "npm run test"
+```
+
+#### Add in package.json
+
+```json
+{
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run prettier:format && git add -A ."
+    }
+  }
+}
+```
