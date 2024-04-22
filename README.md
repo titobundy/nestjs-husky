@@ -181,9 +181,11 @@ $ npm run prepare
 3. Create a pre-commit hook in the .husky directory. This hook will run the npm run lint command before each commit.
 
 ```bash
-$ npx husky add .husky/pre-commit "npx lint-staged"
-$ npx husky add .husky/pre-push "npm run test"
+$ echo "npx lint-staged" > .husky/pre-commit
+$ echo "npm test" > .husky/pre-commit
 ```
+
+
 
 #### Add hooks in package.json instead of using npx husky add
 
