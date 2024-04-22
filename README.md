@@ -1,8 +1,8 @@
-## Usage of Husky with Prettier and Eslint
+# Usage of Husky with Prettier and Eslint
 
 This document describes how to use Husky with Prettier and Eslint.
 
-### Prettier
+## Prettier
 
 Prettier is an opinionated code formatter.
 
@@ -55,7 +55,7 @@ dist
 package-lock.json
 ```
 
-### Eslint
+## Eslint
 
 Eslint is a static code analysis tool for identifying problematic patterns found in JavaScript code.
 
@@ -86,7 +86,7 @@ $ npm install --save-dev eslint-plugin-prettier
 More details:
 https://github.com/prettier/eslint-plugin-prettier
 
-Evitar que choquen las reglas de prettier con las de eslint
+Avoid that prettier and eslint rules conflict
 
 ```bash
 $ npm install --save-dev eslint-config-prettier
@@ -144,7 +144,7 @@ dist
 https://github.com/colbyfayock/my-husky-project/tree/main%2Btest
 https://github.com/pedrovelasquez9/react-typescript-eslint-prettier-husky-template
 
-### Husky
+## Husky
 
 https://git-scm.com/docs/githooks
 
@@ -155,11 +155,11 @@ https://github.com/typicode/husky
 The next installation was used in husky with package.json
 
 ```bash
-$ npm install huskey --save-dev
+$ npm install husky --save-dev
 ```
 
 ```bash
-$ yarn add huskey -D
+$ yarn add husky -D
 ```
 
 To create a .husky folder and add the pre-commit file
@@ -168,7 +168,7 @@ To create a .husky folder and add the pre-commit file
 $ npx hunsky-init && npm install
 ```
 
-#### Define a script in package.json. 
+#### Define a script in package.json. (Alternative installation)
 
 1. Install Husky using the npm package manager.
 2. Create a .husky directory in the project root.
@@ -181,11 +181,11 @@ $ npm run prepare
 3. Create a pre-commit hook in the .husky directory. This hook will run the npm run lint command before each commit.
 
 ```bash
-$ npx husky add husky/pre-commit "npx lint-staged"
-$ npx husky add husky/pre-push "npm run test"
+$ npx husky add .husky/pre-commit "npx lint-staged"
+$ npx husky add .husky/pre-push "npm run test"
 ```
 
-#### Add in package.json
+#### Add hooks in package.json instead of using npx husky add
 
 ```json
 {
@@ -196,3 +196,36 @@ $ npx husky add husky/pre-push "npm run test"
   }
 }
 ```
+
+### Lint-staged
+
+https://github.com/okonet/lint-staged
+
+```bash
+$ npm install --save-dev lint-staged
+```
+
+#### Exampe .lintstagedrc config file
+
+```json
+{
+  "*.{js,jsx,ts,tsx}": ["eslint --fix", "git add"]
+}
+```
+
+#### Example using script command in package.json
+
+```json
+"lint-staged": {
+    "*.{js, jsx,ts,tsx}": [
+      "eslint --quiet --fix"
+    ],
+    "*.{json,js,ts,jsx,tsx,html}": [
+      "prettier --write --ignore-unknown"
+    ]
+  },
+```
+
+More details:
+https://dev.to/shashwatnautiyal/complete-guide-to-eslint-prettier-husky-and-lint-staged-fh9
+https://carlosazaustre.es/husky-lintstaged
