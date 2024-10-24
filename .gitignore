@@ -38,3 +38,8 @@ lerna-debug.log*
 # Environment Variables
 .env
 
+# Others
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
