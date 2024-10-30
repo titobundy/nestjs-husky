@@ -9,4 +9,5 @@ Este proyecto base actúa como un arquetipo para la creación de microservicios 
 - [Lineamientos](docs/guidelines.md)
 - [Configuración de Herramientas](docs/config-tools.md)
 - [Arquitectura Limpia](docs/clean-architecture.md)
+- [Arquitectura Corte Vertical](docs/vertical-slice-architecture.md)
 - [Licencia](docs/licencia.md)
